@@ -1,0 +1,22 @@
+
+# dependencies
+/back_end/node_modules
+/back_end/.pnp
+/back_end/.pnp.js
+
+# testing
+/back_end/coverage
+
+# production
+/back_end/build
+
+# misc
+/back_end/.DS_Store
+/back_end/.env.local
+/back_end/.env.development.local
+/back_end/.env.test.local
+/back_end/.env.production.local
+
+/back_end/npm-debug.log*
+/back_end/yarn-debug.log*
+/back_end/yarn-error.log*
