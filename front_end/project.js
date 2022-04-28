@@ -63,7 +63,11 @@ async function getProjects() {
     for (i in response) {
         let html = `<div class="feature col" id="project-${response[i].id}">
         <img src="${response[i].photo}" width="150px" height="150px"></img>
+
         <h2>${response[i].name}</h2>
+        <h3>Fund: ${response[i].funds}</h3>
+        <h3>Received: ${response[i].received}</h3>
+        <h3>Residual: ${response[i].residual}</h3>
         <p>${response[i].description}</p>
         <p>
         <button class="btn btn-warning" id="pay-1" project_id="${response[i].id}" project_fund_amount="1000000000000000000000000" >Donate 1 NEAR</button>
