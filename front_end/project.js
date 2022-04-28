@@ -28,17 +28,20 @@ async function load() {
 
 
 load().then(async () => {
-    await getProjects();
-    await getProjectId();
+    await getProjects().then( async () => {
+        getProjectId();
+    })
+
 });
 
 async function getProjectId() {
     document.onclick = function (e) {
-        console.log(e.target.tagName);
+        
         if (e.target.tagName == "BUTTON") {
             var project_id = e.target.getAttribute("project_id");
             var project_fund_amount = e.target.getAttribute("project_fund_amount");
-            startDonate(project_id), project_fund_amount;
+            console.log(project_fund_amount);
+            startDonate(project_id, project_fund_amount);
 
         }
     }
