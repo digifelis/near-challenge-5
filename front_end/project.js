@@ -14,7 +14,7 @@ async function load() {
         walletUrl: 'https://wallet.testnet.near.org'
     });
     // connect to the NEAR Wallet
-    wallet = new nearApi.WalletConnection(near, 'hesapmakinasi');
+    wallet = new nearApi.WalletConnection(near, 'donate');
     // connect to a NEAR smart contract
     contract = new nearApi.Contract(wallet.account(), 'dev-1651111427025-71600221442385', {
         viewMethods: ['getProject', 'listOfProjects', 'listOfIdProject', 'getNumberOfProjects', 'getFundedProjectsNumber'],
@@ -48,35 +48,43 @@ async function getProjectId() {
 }
 
 async function startDonate(project_id, project_fund_amount) {
-    var response = await contract.donateForPoject({
+    document.getElementById("loader-"+project_id).style.display = "block";
+    document.getElementById("pay-"+project_id).style.display = "none";
+    if(!wallet.isSignedIn()){
+        alert("you have to Sign in by Wallet")
+    } else {
+        var response = await contract.donateForPoject({
             "accountId": wallet.getAccountId(),
             "id": parseInt(project_id),
             "funds": project_fund_amount
-        },
-        "300000000000000",
-        project_fund_amount
+        }
     )
     alert(response);
+    document.getElementById("loader-"+project_id).style.display = "none";
+    document.getElementById("pay-"+project_id).style.display = "block";
+    }
+
 }
 async function getProjects() {
     var response = await contract.listOfProjects({})
     const project_list = document.getElementById("project_list");
-
     console.log(response.length)
     for (i in response) {
-        let html = `<div class="feature col" id="project-${response[i].id}">
-        <img src="${response[i].photo}" width="150px" height="150px"></img>
-
+        let html = `
+        <div class="feature col" id="project-${response[i].id}">
+        <img src="${response[i].photo}" width="350px" height="250px"></img>
         <h2>${response[i].name}</h2>
         <h6>Fund: ${response[i].funds}</h3>
-        <h6>Received: ${response[i].received}</h3>
+        <h6>Received: ${response[i].received }</h3>
         <h6>Residual: ${response[i].residual}</h3>
         <p>${response[i].description}</p>
         <p>
-        <button class="btn btn-warning" id="pay-1" project_id="${response[i].id}" project_fund_amount="1000000000000000000000000" >Donate 1 NEAR</button>
-        <button class="btn btn-warning" id="pay-5" project_id="${response[i].id}" project_fund_amount="5000000000000000000000000" >Donate 5 NEAR</button>
+        <button class="btn btn-warning btn-lg" id="pay-${response[i].id}" project_id="${response[i].id}" project_fund_amount="1" >Donate To Project</button>
+        <div class="loader" id="loader-${response[i].id}" style="display:none"></div>
+     
         </p>
-    </div>`
+        </div>
+        `
         project_list.insertAdjacentHTML("beforeend", html);
         console.log(response[i].id)
     }
