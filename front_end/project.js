@@ -65,9 +65,9 @@ async function getProjects() {
         <img src="${response[i].photo}" width="150px" height="150px"></img>
 
         <h2>${response[i].name}</h2>
-        <h3>Fund: ${response[i].funds}</h3>
-        <h3>Received: ${response[i].received}</h3>
-        <h3>Residual: ${response[i].residual}</h3>
+        <h6>Fund: ${response[i].funds}</h3>
+        <h6>Received: ${response[i].received}</h3>
+        <h6>Residual: ${response[i].residual}</h3>
         <p>${response[i].description}</p>
         <p>
         <button class="btn btn-warning" id="pay-1" project_id="${response[i].id}" project_fund_amount="1000000000000000000000000" >Donate 1 NEAR</button>
